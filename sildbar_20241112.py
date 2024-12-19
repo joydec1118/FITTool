@@ -7,7 +7,7 @@ from data_transfer_page import data_transfer
 import seaborn as sns
 
 
-st.write("66666")
+
 # Add custom CSS to hide the GitHub icon
 st.markdown("""
     <style>
@@ -16,6 +16,16 @@ st.markdown("""
         }
     </style>
 """, unsafe_allow_html=True)
+
+
+add_auth(
+    required=True,
+    login_button_text="Login with Google",
+    login_button_color="#FD504D",
+    login_sidebar=True,
+)
+
+st.write("Congrats, you are subscribed!")
 
 def data_analysis():
         # Sidebar for primary task selection
