@@ -11,8 +11,7 @@ st.write("66666")
 # Add custom CSS to hide the GitHub icon
 st.markdown("""
     <style>
-        footer {visibility: hidden;}
-        [data-testid="stToolbarActions"] > div:first-child {
+        [data-testid="stToolbarActions"] {
             visibility: hidden;
         }
     </style>
