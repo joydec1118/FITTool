@@ -5,7 +5,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from data_transfer_page import data_transfer
 import seaborn as sns
-
+from st_paywall import add_auth
 
 
 # Add custom CSS to hide the GitHub icon
