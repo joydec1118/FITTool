@@ -6,6 +6,8 @@ import matplotlib.pyplot as plt
 from data_transfer_page import data_transfer
 import seaborn as sns
 
+
+st.write("123456")
 # Add custom CSS to hide the GitHub icon
 st.markdown(
     """
