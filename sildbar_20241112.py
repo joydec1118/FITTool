@@ -18,12 +18,7 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 
-add_auth(
-    required=True,
-    login_button_text="Login with Google",
-    login_button_color="#FD504D",
-    login_sidebar=True,
-)
+add_auth(required=True,)
 
 st.write("Congrats, you are subscribed!")
 
