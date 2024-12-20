@@ -19,7 +19,7 @@ st.markdown("""
 
 def example():
     button(username="joydec1215", floating=False, width=221)
-example()
+
 
 
 def data_analysis():
@@ -258,3 +258,7 @@ if primary_task == "資料格式轉換":
         data_transfer()
 elif  primary_task == "資料分析":
         data_analysis()
+
+
+with st.sidebar:
+    example()
