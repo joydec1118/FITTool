@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 from data_transfer_page import data_transfer
 import seaborn as sns
 from streamlit_extras.buy_me_a_coffee import button
-
+import hmac
 
 # Add custom CSS to hide the GitHub icon
 st.markdown("""
