@@ -5,7 +5,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from data_transfer_page import data_transfer
 import seaborn as sns
-from st_paywall import add_auth
+from streamlit_extras.buy_me_a_coffee import button
 
 
 # Add custom CSS to hide the GitHub icon
@@ -17,7 +17,9 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-
+def example():
+    button(username="fake-username", floating=False, width=221)
+example()
 
 
 def data_analysis():
