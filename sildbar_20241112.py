@@ -18,9 +18,7 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 
-add_auth(required=True,)
 
-st.write("Congrats, you are subscribed!")
 
 def data_analysis():
         # Sidebar for primary task selection
