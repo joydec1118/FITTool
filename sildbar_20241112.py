@@ -192,7 +192,9 @@ def display_handle_missing_values():
 
     else:
         st.success("There are no missing values in the dataset!")
-        st.button('save to CSV', on_click=save_data,args=(st.session_state.df,))
+        edf = pd.DataFrame(st.session_state.df)  
+        save_data=edf.to_csv(index=False)
+        st.download_button('Download', save_data, file_name='data.csv')
    
 
 
@@ -207,7 +209,7 @@ def display_boxplot():
     save_flag=0
     numeric_df = st.session_state.df.select_dtypes(include='number')
     feature_to_plot = st.selectbox("選擇特徵繪製箱形圖(boxplot):", numeric_df.columns)
-    col1, col2,col3 = st.columns((1,6,1))
+    col1, col2,col3 = st.columns((1,4,1))
     with col1:
         submit_button = st.button("Submit")
 
@@ -250,7 +252,7 @@ def display_histplot():
     save_flag=0
     numeric_df = st.session_state.df.select_dtypes(include='number')
     feature_to_plot = st.selectbox("選擇特徵繪製直方圖(histplot):", numeric_df.columns)
-    col1, col2,col3 = st.columns((1,6,1))
+    col1, col2,col3 = st.columns((1,4,1))
     with col1:
         submit_button = st.button("Submit")
 
@@ -284,7 +286,7 @@ def display_pairplot():
 
     # Create checkboxes for each numeric column
     selected_columns = st.multiselect("選擇特徵繪製散點圖", numeric_columns, default=numeric_columns[0:3])
-    col1, col2,col3 = st.columns((1,6,1))
+    col1, col2,col3 = st.columns((1,4,1))
 
     with col1:
         submit_button = st.button("Submit")
