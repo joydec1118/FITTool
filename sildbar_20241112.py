@@ -203,14 +203,14 @@ def display_handle_missing_values():
 
 def display_boxplot():
     # Allow user to select a feature/column for the boxplot
+    img_bytes = bytes() 
+    save_flag=0
     numeric_df = st.session_state.df.select_dtypes(include='number')
     feature_to_plot = st.selectbox("選擇特徵繪製箱形圖(boxplot):", numeric_df.columns)
     col1, col2,col3 = st.columns((1,6,1))
     with col1:
         submit_button = st.button("Submit")
 
-    with col3:
-        save_button = st.button("Save")
     if submit_button:
         if pd.api.types.is_numeric_dtype(st.session_state.df[feature_to_plot]):
             # Generate initial boxplot
@@ -229,22 +229,30 @@ def display_boxplot():
             st.write(f"Minimum value for {feature_to_plot}: {min_value}")
             st.write(f"Maximum value for {feature_to_plot}: {max_value}")
         else:
-            st.success("non-numpy type can not use boxplot ")  
-    if save_button:
-        if st.session_state.boxplot_img:  # 确保 img 已经生成
-            st.session_state.boxplot_img.savefig('boxplot_img.png')
-            st.pyplot(st.session_state.boxplot_img)         
+            st.success("non-numpy type can not use boxplot ") 
+            st.session_state.boxplot_img=""
+    with col3:
+        if  st.download_button(label='Download', data=img_bytes, file_name='boxplot.png', mime='image/png' ):
+            save_flag=1
+    if save_flag==1:
+        print("save boxplot")
+        st.pyplot(st.session_state.boxplot_img)
+        avg_value = st.session_state.df[feature_to_plot].mean()
+        min_value = st.session_state.df[feature_to_plot].min()
+        max_value = st.session_state.df[feature_to_plot].max()
+        st.write(f"Average value for {feature_to_plot}: {avg_value:.2f}")
+        st.write(f"Minimum value for {feature_to_plot}: {min_value}")
+        st.write(f"Maximum value for {feature_to_plot}: {max_value}")   
 
 def display_histplot():
     # Allow user to select a feature/column for the boxplot
+    img_bytes = bytes() 
+    save_flag=0
     numeric_df = st.session_state.df.select_dtypes(include='number')
     feature_to_plot = st.selectbox("選擇特徵繪製直方圖(histplot):", numeric_df.columns)
     col1, col2,col3 = st.columns((1,6,1))
     with col1:
         submit_button = st.button("Submit")
-
-    with col3:
-        save_button = st.button("Save")
 
     if submit_button:
         if pd.api.types.is_numeric_dtype(st.session_state.df[feature_to_plot]):
@@ -253,18 +261,24 @@ def display_histplot():
             sns.histplot(st.session_state.df[feature_to_plot], kde=True, ax=ax)
             ax.set_title(f"Boxplot for {feature_to_plot}")
             st.pyplot(fig)
-            st.session_state.histplot_img = plt.gcf()
-            plt.close(fig)  # Close the figure to free up memory
 
-    if save_button:
-        if st.session_state.histplot_img:  # 确保 img 已经生成
-            st.session_state.histplot_img.savefig('histplot_img.png')
-            st.pyplot(st.session_state.histplot_img)
+            img_buffer = io.BytesIO()
+            st.session_state.histplot_img.savefig(img_buffer, format='png')
+            img_bytes = img_buffer.getvalue()
+    with col3:
+        if  st.download_button(label='Download', data=img_bytes, file_name='histplot.png', mime='image/png' ):
+            save_flag=1
+    if  save_flag==1:
+        print("save boxplot")
+        st.pyplot(st.session_state.histplot_img)
+
 def display_pairplot():
     #numeric_df = st.session_state.df.select_dtypes(include=['number'])  
     #fig=sns.pairplot(numeric_df) 
     #st.pyplot(fig)
     df = st.session_state.df
+    img_bytes = bytes() 
+    save_flag=0
     # Select only numeric columns from the DataFrame
     numeric_columns = df.select_dtypes(include=['number']).columns.tolist()
 
@@ -275,9 +289,6 @@ def display_pairplot():
     with col1:
         submit_button = st.button("Submit")
 
-    with col3:
-        save_button = st.button("Save")
-
     if submit_button:
         # If at least two columns are selected, create the pairplot
         if len(selected_columns) >= 2:
@@ -287,11 +298,13 @@ def display_pairplot():
             
         else:
             st.write("Please select at least two columns.")
-    if save_button:
-        if st.session_state.pairplot_img:  # 确保 img 已经生成
-            st.session_state.pairplot_img.savefig('pairplot_img.png')
-            st.pyplot(st.session_state.pairplot_img)
-
+            st.session_state.pairplot_img=""
+    with col3:
+        if  st.download_button(label='Download', data=img_bytes, file_name='pairplot.png', mime='image/png' ):
+            save_flag=1
+    if (save_flag==1):
+        print("save pairplot")
+        st.pyplot(st.session_state.pairplot_img)
       
 # Sidebar for primary task selection
 primary_task = st.sidebar.selectbox("請選擇功能",["資料格式轉換", "資料分析"])
