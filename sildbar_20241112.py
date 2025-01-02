@@ -268,7 +268,9 @@ def display_histplot():
             sns.histplot(st.session_state.df[feature_to_plot], kde=True, ax=ax)
             ax.set_title(f"Boxplot for {feature_to_plot}")
             st.pyplot(fig)
-
+            st.session_state.histplot_img = plt.gcf()
+            plt.close(fig)  # Close the figure to free up memory
+            
             img_buffer = io.BytesIO()
             st.session_state.histplot_img.savefig(img_buffer, format='png')
             img_bytes = img_buffer.getvalue()
