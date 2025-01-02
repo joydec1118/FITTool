@@ -42,30 +42,6 @@ def savetoJson(edf):
     edf.columns = edf.iloc[0].tolist()
     edf = edf.iloc[1:]
     return edf.to_json(orient='records', force_ascii=False)
-    '''
-    try:
-        with open('temp.json', 'w') as f:
-            f.write(edf.to_json(orient='records', force_ascii=False))
-    except ValueError as e:
-        print("EEEEEEEEE")
-        edf=edf.loc[:, ~edf.columns.duplicated()]
-        with open('temp.json', 'w') as f:
-            f.write(edf.to_json(orient='records', force_ascii=False))        
-    print("savetoJson")
-    '''
-def customDownloadButton(df):
-    csv = savetoCSV(df)
-    txt = savetoTXT(df)
-    json=savetoJson(df)
-    tab1, tab2, tab3 = st.tabs(["Convert to CSV", "Convert to TXT", "Convert to JSON"])
-    with tab1:
-        st.download_button('Download', csv, file_name='data.csv')
-    with tab2:
-        st.download_button('Download', txt, file_name='data.txt')
-    with tab3:
-        st.download_button('Download', json, file_name='data.json')
-
-
 
 
 def data_transfer_upload():
@@ -135,13 +111,23 @@ def data_transfer():
         
             # 使用 beta_columns 將按鈕水平排列
             col1 ,col2 ,col3 ,col4 ,col5, col6 = st.columns(6)
-            with col4:
+            with col5:
                 button_Transpose = st.button('Transpose', on_click=transpose,args=(edited_df,))  
             # 在第一列添加第一個按鈕
-            with col5:
-                button_Reset = st.button('Reset', on_click=reset)     
             with col6:
-                button1 = st.button('Save', on_click=customDownloadButton,args=(edited_df,))
+                button_Reset = st.button('Reset', on_click=reset)     
         
-
+            col1 ,col2 ,col3 ,col4 ,col5 = st.columns(5)
+            with col3:
+                
+                csv = savetoCSV(edited_df)
+                st.download_button('Save to CSV', csv, file_name='data.csv')
+            with col4:
+                
+                txt = savetoTXT(edited_df)
+                st.download_button('Save to TXT', txt, file_name='data.txt')
+            with col5:
+                
+                json = savetoJson(edited_df)
+                st.download_button('Save to JSON', json, file_name='data.json')
 
