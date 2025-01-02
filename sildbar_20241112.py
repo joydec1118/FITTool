@@ -230,6 +230,10 @@ def display_boxplot():
             st.write(f"Average value for {feature_to_plot}: {avg_value:.2f}")
             st.write(f"Minimum value for {feature_to_plot}: {min_value}")
             st.write(f"Maximum value for {feature_to_plot}: {max_value}")
+            
+            img_buffer = io.BytesIO()
+            st.session_state.boxplot_img.savefig(img_buffer, format='png')
+            img_bytes = img_buffer.getvalue()            
         else:
             st.success("non-numpy type can not use boxplot ") 
             st.session_state.boxplot_img=""
@@ -297,6 +301,9 @@ def display_pairplot():
             img=sns.pairplot(df[selected_columns])
             st.pyplot(plt)
             st.session_state.pairplot_img = img
+            img_buffer = io.BytesIO()
+            st.session_state.pairplot_img.savefig(img_buffer, format='png')
+            img_bytes = img_buffer.getvalue()            
             
         else:
             st.write("Please select at least two columns.")
